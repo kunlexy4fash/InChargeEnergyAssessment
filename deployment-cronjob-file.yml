@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1 
+kind: cronjob
+metadata:
+  name: deployment-cronjob
+spec:
+  schedule: "* * * * 0,1,2,3,4,5,6" # set for everyday of the week  
+    matchLabels:
+  spec:  
+    template:
+      metadata:
+        labels:
+          app: deployment-app
+    spec:
+      restartpolicy: OnFailure
+      containers:
+      - name: deployment-cronjob
+        image: deployment-image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
